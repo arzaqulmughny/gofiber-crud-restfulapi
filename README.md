@@ -5,9 +5,8 @@ Terdiri 2 aplikasi, yaitu:
     - Menggunakan framework Next JS
     - Rencana akan integrasi dengan API yang dibuat dengan Go + Fiber
 2. Backend
-    - Menggunakan bahasa Go dengan framework Gofiber
     - Sebagai API service untuk di integrasikan dengan Frontend
+    - Menggunakan bahasa Go dengan framework Gofiber
+    - GORM untuk ORM
 
 Untuk rencana aplikasinya hanya aplikasi notes sederhana, memungkinkan membuat,edit, melihat dan hapus catatan, serta dilengkapi dengan autentikasi dan otorisasi.
-
-Projek ini saya buat sesederhana mungkin dengan pendekatan atau gaya folder yang hampir mirip dengan framework Laravel karena background saya pengalaman menggunakan framework tersebut.
