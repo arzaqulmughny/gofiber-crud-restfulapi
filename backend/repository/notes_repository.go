@@ -26,3 +26,24 @@ func FindAllNotes() ([]domain.Notes, error) {
 
 	return notes, nil
 }
+
+func FindNoteById(id uint) (*domain.Notes, error) {
+	var note domain.Notes
+
+	result := database.DB.First(&note, id)
+	if (result.Error != nil) {
+		return nil, result.Error
+	}
+
+	return &note, nil
+}
+
+func DeleteNoteById(id uint) error {
+	result := database.DB.Delete(&domain.Notes{}, id)
+	
+	if (result.Error != nil) {
+		return result.Error
+	}
+
+	return nil
+}

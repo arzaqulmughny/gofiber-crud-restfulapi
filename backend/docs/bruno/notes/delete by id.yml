@@ -1,17 +1,14 @@
 info:
-  name: new note
+  name: delete by id
   type: http
-  seq: 1
+  seq: 4
 
 http:
-  method: POST
-  url: "{{BASE_URL}}/api/notes"
+  method: DELETE
+  url: "{{BASE_URL}}/api/notes/2"
   body:
     type: json
-    data: |-
-      {
-        "title": "1"
-      }
+    data: ""
   auth: inherit
 
 settings:

@@ -12,3 +12,11 @@ func CreateNotesService(notes *domain.Notes) (uint, error) {
 func FindAllNotesSerivice() ([]domain.Notes, error) {
 	return repository.FindAllNotes()
 }
+
+func FindNoteByIdService(id uint) (*domain.Notes, error) {
+	return repository.FindNoteById(id)
+}
+
+func DeleteNoteByIdService(id uint) error {
+	return repository.DeleteNoteById(id)
+}
