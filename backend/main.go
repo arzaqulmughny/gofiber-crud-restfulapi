@@ -1,16 +1,20 @@
 package main
 
 import (
+	"gofiber-restful-api/app"
+	"gofiber-restful-api/database"
 	"log"
+
 	"github.com/gofiber/fiber/v3"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	app := fiber.New()
+	godotenv.Load()
+	database.InitDB()
 
-	app.Get("/", func (c fiber.Ctx) error {
-		return c.SendString("Test 123")
-	})
+	fiberApp := fiber.New()
+	app.SetupRouter(fiberApp)
 
-	log.Fatal(app.Listen(":8000"))
+	log.Fatal(fiberApp.Listen(":8000"))
 }
