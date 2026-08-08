@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"gofiber-restful-api/domain"
+	"gofiber-restful-api/dtos"
 	"gofiber-restful-api/helpers"
 	"gofiber-restful-api/services"
 	"strconv"
@@ -42,7 +43,7 @@ func CreateNotesController(c fiber.Ctx) error {
 	})
 }
 
-func FindAllNotesController (c fiber.Ctx) error {
+func FindAllNotesController(c fiber.Ctx) error {
 	notes, err := services.FindAllNotesSerivice()
 
 	if err != nil {
@@ -52,12 +53,12 @@ func FindAllNotesController (c fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"data": notes,
+		"data":  notes,
 		"error": nil,
 	})
 }
 
-func FindNoteByIdController (c fiber.Ctx) error {
+func FindNoteByIdController(c fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 0)
 
 	if err != nil {
@@ -67,7 +68,7 @@ func FindNoteByIdController (c fiber.Ctx) error {
 	}
 
 	// Find note by id
-	note, err := services.FindNoteByIdService(uint(id));
+	note, err := services.FindNoteByIdService(uint(id))
 
 	if err != nil {
 		if err.Error() == "record not found" {
@@ -82,11 +83,11 @@ func FindNoteByIdController (c fiber.Ctx) error {
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"error": nil,
-		"data": note,
+		"data":  note,
 	})
 }
 
-func DeleteNoteByIdController (c fiber.Ctx) error {
+func DeleteNoteByIdController(c fiber.Ctx) error {
 	id, err := strconv.ParseUint(c.Params("id"), 10, 0)
 
 	if err != nil {
@@ -98,13 +99,45 @@ func DeleteNoteByIdController (c fiber.Ctx) error {
 	err = services.DeleteNoteByIdService(uint(id))
 
 	if err != nil {
+		if err.Error() == "record not found" {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"error": nil,
+		"error":   nil,
 		"message": "Note berhasil dihapus.",
+	})
+}
+
+func UpdateNoteByIdController(c fiber.Ctx) error {
+	id, err := strconv.ParseUint(c.Params("id"), 10, 0)
+
+	var request dtos.UpdateNoteRequest
+
+	if err := c.Bind().Body(&request); err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid request body",
+		})
+	}
+
+	result, err := services.UpdateNoteByIdService(uint(id), &request)
+
+	if err != nil {
+		if err.Error() == "record not found" {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"message": err.Error(),
+			})
+		}
+	}
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"data":    result,
+		"message": "Data update successful",
 	})
 }
