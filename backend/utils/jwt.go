@@ -9,8 +9,8 @@ import (
 
 func GenerateToken(userId uint) (string, error) {
 	claims := jwt.MapClaims{
-		"user_id":    userId,
-		"expired_at": time.Now().Add(24 * time.Hour).Unix(),
+		"user_id": userId,
+		"exp":     time.Now().Add(10 * time.Hour).Unix(),
 	}
 
 	token := jwt.NewWithClaims(

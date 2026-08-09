@@ -2,6 +2,7 @@ package app
 
 import (
 	"gofiber-restful-api/controllers"
+	"gofiber-restful-api/middleware"
 
 	"github.com/gofiber/fiber/v3"
 )
@@ -11,7 +12,7 @@ func SetupRouter(app *fiber.App) {
 	api := app.Group("/api")
 
 	// Notes
-	notes := api.Group("/notes")
+	notes := api.Group("/notes", middleware.AuthMiddleware)
 	notes.Put("/:id", controllers.UpdateNoteByIdController)
 	notes.Post("/", controllers.CreateNotesController)
 	notes.Get("/:id", controllers.FindNoteByIdController)
