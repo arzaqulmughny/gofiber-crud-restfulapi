@@ -30,3 +30,24 @@ Content-Type: application/json
     "title": "Update title",
     "body": "update body"
 }
+
+### Register new user
+POST {{BASE_URL}}/api/register
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "123455678",
+    "email": "arza@email.com"
+}
+
+### Login
+POST {{BASE_URL}}/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "username": "test",
+    "password": "123455678"
+}

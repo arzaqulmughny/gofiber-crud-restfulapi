@@ -17,4 +17,8 @@ func SetupRouter(app *fiber.App) {
 	notes.Get("/:id", controllers.FindNoteByIdController)
 	notes.Delete("/:id", controllers.DeleteNoteByIdController)
 	notes.Get("/", controllers.FindAllNotesController)
+
+	// Auth
+	api.Post("/register", controllers.Register)
+	api.Post("/login", controllers.Login)
 }

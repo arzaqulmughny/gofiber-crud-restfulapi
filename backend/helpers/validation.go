@@ -15,14 +15,16 @@ func Validate(s interface{}) map[string]string {
 
 	for _, e := range err.(validator.ValidationErrors) {
 		switch e.Tag() {
-			case "required":
-					errors[e.Field()] = e.Field() + " wajib diisi."
-			case "min":
-					errors[e.Field()] = e.Field() + " minimal " + e.Param() + " karakter."
-			case "max":
-					errors[e.Field()] = e.Field() + " maksimal " + e.Param() + " karakter."
-			default:
-					errors[e.Field()] = e.Field() + " tidak valid."
+		case "required":
+			errors[e.Field()] = e.Field() + " wajib diisi."
+		case "min":
+			errors[e.Field()] = e.Field() + " minimal " + e.Param() + " karakter."
+		case "max":
+			errors[e.Field()] = e.Field() + " maksimal " + e.Param() + " karakter."
+		case "unique":
+			errors[e.Field()] = e.Field() + " telah digunakan."
+		default:
+			errors[e.Field()] = e.Field() + " tidak valid."
 		}
 	}
 
