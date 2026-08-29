@@ -1,0 +1,218 @@
+basePath: /api
+definitions:
+  domain.Notes:
+    properties:
+      body:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        maxLength: 255
+        minLength: 3
+        type: string
+      updated_at:
+        type: string
+    required:
+    - title
+    type: object
+  domain.Users:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  dtos.CreateNewNoteRequest:
+    properties:
+      body:
+        type: string
+      title:
+        type: string
+    type: object
+  dtos.CreateNewNoteResponse:
+    properties:
+      data:
+        $ref: '#/definitions/domain.Notes'
+      error:
+        type: string
+    type: object
+  dtos.FindAllNotesResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/domain.Notes'
+        type: array
+      error:
+        type: string
+    type: object
+  dtos.UserLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dtos.UserLoginResponse:
+    properties:
+      data:
+        type: string
+      message:
+        type: string
+    type: object
+  dtos.UserRegisterRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - password
+    - username
+    type: object
+  dtos.UserRegisterResponse:
+    properties:
+      data:
+        $ref: '#/definitions/domain.Users'
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: RESTful API documentation for notes api
+  title: Notes API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Login into existing user
+      parameters:
+      - description: Data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.UserLoginResponse'
+      summary: Login
+      tags:
+      - Auth
+  /notes:
+    get:
+      consumes:
+      - application/json
+      description: Get all notes
+      parameters:
+      - description: Data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateNewNoteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.FindAllNotesResponse'
+      summary: Show all notes
+      tags:
+      - Notes
+    post:
+      consumes:
+      - application/json
+      description: Create new note
+      parameters:
+      - description: Data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateNewNoteRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.CreateNewNoteResponse'
+      summary: Store new note
+      tags:
+      - Notes
+  /notes/{id}:
+    get:
+      parameters:
+      - description: Note id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateNewNoteResponse'
+      summary: Find note by id
+      tags:
+      - Notes
+    put:
+      parameters:
+      - description: Note id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CreateNewNoteResponse'
+      summary: Update existing note
+      tags:
+      - Notes
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Create an new user
+      parameters:
+      - description: Data
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UserRegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.UserRegisterResponse'
+      summary: Register new user
+      tags:
+      - Auth
+swagger: "2.0"

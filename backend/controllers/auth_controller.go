@@ -8,6 +8,16 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
+// Login godoc
+//
+// @Summary 		Login
+// @Description		Login into existing user
+// @Tags			Auth
+// @Accept json
+// @Param body body dtos.UserLoginRequest true "Data"
+// @Produce json
+// @Success 201 {object} dtos.UserLoginResponse
+// @Router			/login	[post]
 func Login(c fiber.Ctx) error {
 	var request dtos.UserLoginRequest
 
@@ -38,6 +48,16 @@ func Login(c fiber.Ctx) error {
 	})
 }
 
+// Register godoc
+//
+//	@Summary		Register new user
+//	@Description	Create an new user
+//	@Tags			Auth
+//	@Accept			json
+//	@Param			body	body	dtos.UserRegisterRequest	true	"Data"
+//	@Produce		json
+//	@Success		201	{object}	dtos.UserRegisterResponse
+//	@Router			/register [post]
 func Register(c fiber.Ctx) error {
 	var request dtos.UserRegisterRequest
 

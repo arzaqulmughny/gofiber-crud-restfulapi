@@ -13,11 +13,11 @@ var DB *gorm.DB
 
 func InitDB() {
 	config := &mysqldriver.Config{
-		DBName: os.Getenv("DB_NAME"),
-		User: os.Getenv("DB_USER"),
-		Passwd: os.Getenv("DB_PASSWORD"),
-		Net: "tcp",
-		Addr: os.Getenv("DB_HOST") + ":" + os.Getenv("DB_PORT"),
+		DBName:    os.Getenv("DB_NAME"),
+		User:      os.Getenv("DB_USER"),
+		Passwd:    os.Getenv("DB_PASSWORD"),
+		Net:       "tcp",
+		Addr:      os.Getenv("DB_HOST") + ":" + os.Getenv("DB_PORT"),
 		ParseTime: true,
 	}
 
@@ -29,6 +29,6 @@ func InitDB() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to connect to database!")
 	}
-	
+
 	log.Info().Msg("Database connected!")
 }
