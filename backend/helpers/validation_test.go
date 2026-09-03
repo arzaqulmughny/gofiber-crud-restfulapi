@@ -43,3 +43,29 @@ func TestValidate_EmptyRequiredField(t *testing.T) {
 		t.Errorf("Expected '%s', got '%s'", expected, result["Name"])
 	}
 }
+
+// Test 3: Too short input, should return error
+func TestValidate_TooShort(t *testing.T) {
+	input := TestRegisterUserStruct{
+		Name:     "A",
+		Email:    "",
+		Password: "ABC",
+	}
+
+	result := Validate(input)
+
+	if result == nil {
+		t.Fatal("Expected errors, got nil", result)
+	}
+
+	// Check error message
+	expectedNameError := "Name minimal 3 karakter."
+	if result["Name"] != expectedNameError {
+		t.Errorf("Expected '%s', got '%s'", expectedNameError, result["Name"])
+	}
+
+	expectedPasswordError := "Password minimal 8 karakter."
+	if result["Password"] != expectedPasswordError {
+		t.Errorf("Expected '%s', got '%s'", expectedPasswordError, result["Password"])
+	}
+}
